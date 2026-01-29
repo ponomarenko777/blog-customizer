@@ -11,6 +11,7 @@ import {
 	ArticleStateType,
 	backgroundColors,
 	contentWidthArr,
+	defaultArticleState,
 	fontColors,
 	fontFamilyOptions,
 	fontSizeOptions,
@@ -96,8 +97,13 @@ export const ArticleParamsForm = ({ value, onApply, onReset }: Props) => {
 
 	const handleReset = useCallback(() => {
 		onReset();
-	}, [onReset]);
 
+		setFontFamily(defaultArticleState.fontFamilyOption);
+		setFontSize(defaultArticleState.fontSizeOption);
+		setFontColor(defaultArticleState.fontColor);
+		setBackgroundColor(defaultArticleState.backgroundColor);
+		setContentWidth(defaultArticleState.contentWidth);
+	}, [onReset]);
 	return (
 		<>
 			<div ref={arrowWrapRef}>
