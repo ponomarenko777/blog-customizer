@@ -112,7 +112,7 @@ export const ArticleParamsForm = ({ value, onApply, onReset }: Props) => {
 					onSubmit={handleApply}
 					onReset={handleReset}>
 					<Text as='h2' size={31} weight={800} align='left' uppercase>
-						<span>Задайте параметры</span>
+						Задайте параметры
 					</Text>
 
 					<Select
