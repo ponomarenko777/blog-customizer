@@ -20,37 +20,18 @@ import {
 type Props = {
 	value: ArticleStateType;
 	onApply: (next: ArticleStateType) => void;
-	onReset?: () => void;
-
-	isOpen?: boolean;
-	onOpenChange?: (open: boolean) => void;
+	onReset: () => void;
 };
 
-export const ArticleParamsForm = ({
-	value,
-	onApply,
-	onReset,
-	isOpen,
-	onOpenChange,
-}: Props) => {
-	const [innerOpen, setInnerOpen] = useState(false);
-	const open = isOpen ?? innerOpen;
-
-	const setOpen = useCallback(
-		(next: boolean) => {
-			if (typeof isOpen === 'boolean') {
-				onOpenChange?.(next);
-			} else {
-				setInnerOpen(next);
-			}
-		},
-		[isOpen, onOpenChange]
-	);
-
-	const toggleOpen = useCallback(() => setOpen(!open), [open, setOpen]);
+export const ArticleParamsForm = ({ value, onApply, onReset }: Props) => {
+	const [open, setOpen] = useState(false);
 
 	const asideRef = useRef<HTMLElement | null>(null);
 	const arrowWrapRef = useRef<HTMLDivElement | null>(null);
+
+	const toggleOpen = useCallback(() => {
+		setOpen((prev) => !prev);
+	}, []);
 
 	useEffect(() => {
 		if (!open) return;
@@ -74,7 +55,7 @@ export const ArticleParamsForm = ({
 			document.removeEventListener('mousedown', handlePointerDown);
 			document.removeEventListener('touchstart', handlePointerDown);
 		};
-	}, [open, setOpen]);
+	}, [open]);
 
 	const [fontFamily, setFontFamily] = useState<OptionType>(
 		value.fontFamilyOption
@@ -110,19 +91,11 @@ export const ArticleParamsForm = ({
 
 			setOpen(false);
 		},
-		[
-			onApply,
-			fontFamily,
-			fontColor,
-			backgroundColor,
-			contentWidth,
-			fontSize,
-			setOpen,
-		]
+		[onApply, fontFamily, fontColor, backgroundColor, contentWidth, fontSize]
 	);
 
 	const handleReset = useCallback(() => {
-		onReset?.();
+		onReset();
 	}, [onReset]);
 
 	return (
